@@ -1,0 +1,41 @@
+Peta NumPy Array (urutan belajar)
+
+1. Membuat array
+
+np.array, np.zeros, np.ones, np.arange, np.linspace
+
+2. Atribut dasar array
+
+shape (bentuk), ndim (jumlah dimensi), dtype (tipe data), size (jumlah elemen)
+
+3. Indexing & slicing
+
+Index 1D dan 2D: arr[0], arr[1, 2]
+Slicing: arr[1:3], arr[:, 0] (ambil satu kolom)
+Boolean indexing: arr[arr > 5] (filter pakai kondisi, ini sering banget dipakai di data analysis)
+
+4. Operasi vectorized
+
+Aritmetika elemen demi elemen (yang tadi kita bahas)
+Fungsi agregasi: sum, mean, min, max, std
+Parameter axis (hitung per baris vs per kolom, ini sering bikin bingung)
+
+5. Broadcasting
+
+Scalar + array (yang baru kita bahas)
+Array 2D + array 1D (aturan kecocokan shape)
+
+6. Reshape & manipulasi
+
+reshape, flatten, concatenate, stack
+
+7. Missing values
+
+np.nan, np.isnan, np.nanmean
+
+8. Vectorization vs loop
+
+Ukur waktu pakai %timeit (target akhirmu)
+Pembuktian
+
+Kamu bilang soal tadi sudah ngerti, jadi jawab soal yang sempat tertunda ini:
