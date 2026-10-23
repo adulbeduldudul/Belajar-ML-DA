@@ -14,9 +14,9 @@ BULAN 1: PYTHON DATA WRANGLING & AUTOMATION
 * Minggu 2: NumPy & Vectorized Computations
   * Target: Pahami NumPy Array, Slicing, Broadcasting, Vectorization vs Loop murni (bandingkan kecepatan eksekusinya).
   * Output: 5 latihan matrix manipulation dan komputasi statistika dasar menggunakan NumPy.
-* Minggu 3: Pandas Core (Filtering & Manipulation)
-  * Target: Series vs DataFrame, .loc, .iloc, filtering multi-kondisi, handling missing value (dropna, fillna), konversi tipe data.
-  * Output: Clean dataset kotor dari Kaggle (misal: Titanic / Airbnb dataset).
+  * Minggu 3: Pandas Core (Filtering & Manipulation)
+    * Target: Series vs DataFrame, .loc, .iloc, filtering multi-kondisi, handling missing value (dropna, fillna), konversi tipe data.
+    * Output: Clean dataset kotor dari Kaggle (misal: Titanic / Airbnb dataset).
 * Minggu 4: Pandas Advanced (Aggregation & Reshaping)
   * Target: groupby(), agg(), merge(), concat(), pivot_table(), melt().
   * Output: Notebook EDA berisi rangkuman metrik bisnis per segmen/kategori.
