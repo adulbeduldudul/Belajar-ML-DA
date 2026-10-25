@@ -1,0 +1,35 @@
+Lapisan 1: Fondasi matematika
+
+Ini bottleneck yang paling sering bikin orang mentok di tengah.
+
+DeepLearning.AI: Mathematics for Machine Learning and Data Science (Coursera). Aljabar linear, kalkulus, probabilitas, dan statistik dikaitkan langsung ke ML.
+3Blue1Brown (Essence of Linear Algebra dan Calculus) di YouTube, buat intuisi sebelum rumus.
+Lapisan 2: ML end-to-end, ini yang paling mendekati “guide”
+
+Machine Learning Zoomcamp (DataTalks.Club) adalah platform yang paling cocok sama gaya belajarmu. Filosofinya: cara terbaik belajar ML adalah membangun dan men-deploy proyek nyata dari notebook sampai service yang jalan. Gratis dan project-based. Satu catatan: cohort 2026 mulai 14 September 2026, jadi sudah lewat. Materinya tetap bisa kamu ikuti mandiri lewat GitHub-nya, tinggal kamu yang disiplin sendiri. 
+datatalks
+kdnuggets
+
+Buat teori dan kedalaman, ini yang gue tahu secara umum (belum gue verifikasi ketersediaan terbarunya): Machine Learning Specialization (Andrew Ng) dan Stanford CS229.
+
+Lapisan 3: Deep learning
+
+Sebagai pengetahuan umum juga: fast.ai (top-down, langsung bikin model) dan Karpathy “Neural Networks: Zero to Hero” (bangun neural net dan GPT dari nol). Yang kedua bagus banget buat paham apa yang terjadi di dalam model.
+
+Lapisan 4: Production, yang bikin kamu “engineer”, bukan cuma “modeler”
+
+MLOps Zoomcamp, gratis. Isinya produksi-kan layanan ML, dari training dan eksperimen sampai deployment dan monitoring. Nggak ada cohort live di 2026, tapi seluruh course tersedia gratis dan self-paced. Perhatikan prasyaratnya: repo-nya menyebut kamu sebaiknya sudah punya pengalaman ML, misalnya lewat ML Zoomcamp. Jadi urutannya memang harus lapisan 2 dulu. 
+The Only Free Course You Need To Become a MLOps Engineer
+ +2
+
+Lapisan 5: LLM dan GenAI (belakangan)
+
+LLM Zoomcamp (10 minggu, gratis) yang membahas RAG, vector search, embeddings, agents, evaluasi, dan monitoring. Ada juga LLM Course dari Maxime Labonne di GitHub, yang punya dua roadmap: LLM Scientist dan LLM Engineer. 
+kdnuggets
+buymeacoffee
+
+Pushback
+
+Kamu pernah bilang pengin tiga track paralel dan nggak mau nunda satu pun. Untuk jadi expert ML engineer, itu jebakan. Expert itu kedalaman plus kemampuan ngirim sistem yang jalan, bukan jumlah tools yang pernah disentuh. Saran gue: satu platform utama per fase, dan jangan masuk Lapisan 4 atau 5 sebelum kamu bisa jelasin sendiri apa itu overfitting dan cara memvalidasinya. Tanpa fondasi, MLOps dan LLM cuma jadi copy-paste tools.
+
+Satu hal yang menentukan titik masukmu: sekarang kamu sudah sampai mana di ML, baru Python dan pandas, sudah pernah bikin model sklearn sendiri, atau sudah sampai evaluasi model (cross-validation, metrik)?

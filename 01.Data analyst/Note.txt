@@ -1,0 +1,249 @@
+1. Persiapan library
+import pandas as pdimport numpy as npimport matplotlib.pyplot as pltimport seaborn as snsfrom scipy import statsfrom scipy.stats import chi2_contingency
+
+
+
+Kalau library belum terpasang, jalankan di terminal atau notebook:
+%pip install pandas numpy matplotlib seaborn scipy
+
+
+
+Misalkan dataset lu sudah dibaca:
+df = pd.read_csv("zomato_cleaned.csv")
+
+
+
+2. EDA dasar sebelum uji statistik
+Sebelum melakukan correlation, t-test, ANOVA, atau chi-square, pahami dulu struktur data lu.
+df.head()df.shapedf.columns.tolist()df.info()df.isna().sum()df.describe()df.describe(include="object")
+
+
+
+Fungsinya:
+Sintaks	Kegunaan
+df.head()	Melihat sampel data
+df.shape	Jumlah baris dan kolom
+df.info()	Tipe data dan nilai non-null
+df.isna().sum()	Menghitung missing value
+df.describe()	Statistik numerik
+df.describe(include="object")	Ringkasan kolom kategorikal
+
+Ingat: jangan langsung melakukan uji statistik sebelum memeriksa tipe data, missing value, nilai aneh, dan struktur variabel.
+3. Correlation — mengukur hubungan antarvariabel
+Correlation digunakan untuk mengetahui seberapa kuat dan ke arah mana dua variabel numerik berhubungan.
+
+Misalnya, lu ingin mengetahui apakah Customer_Age berhubungan dengan Sales, atau apakah Votes berhubungan dengan Rating dalam dataset restoran.
+A. Pearson correlation
+Digunakan untuk mengukur hubungan linear antara dua variabel numerik.
+df["Sales"].corr(df["Profit"], method="pearson")
+
+
+
+Kalau ingin melihat korelasi seluruh kolom numerik:
+corr = df.select_dtypes(include="number").corr()corr
+
+
+
+Visualisasi menggunakan heatmap:
+sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")plt.show()
+
+
+
+
+
+
+
+
+
+
+digikey.com
+
+
+Interpretasi koefisien korelasi \(r\):
+Nilai absolut \(r\)	Interpretasi kasar
+0–0,19	Sangat lemah
+0,20–0,39	Lemah
+0,40–0,59	Sedang
+0,60–0,79	Kuat
+0,80–1,00	Sangat kuat
+
+Angka tersebut hanya panduan praktis, bukan batas universal.
+- \(r > 0\): hubungan positif.
+- \(r < 0\): hubungan negatif.
+- \(r \approx 0\): tidak ada hubungan linear yang berarti.
+B. Spearman correlation
+Dipakai ketika lu ingin mengukur hubungan monotonik berdasarkan peringkat, misalnya saat hubungan tidak linear atau data bersifat ordinal.
+df["Rating"].corr(df["Votes"], method="spearman")
+
+
+
+Atau seluruh kolom numerik:
+df.select_dtypes(include="number").corr(method="spearman")
+
+
+
+Catatan: Pearson lebih berfokus pada hubungan linear dan sensitif terhadap outlier. Spearman menggunakan peringkat sehingga sering lebih cocok untuk data ordinal atau hubungan monotonik yang tidak linear.
+
+4. T-test — menguji perbedaan rata-rata dua kelompok
+Misalnya lu ingin menguji apakah rata-rata Sales berbeda antara dua kelompok gender.
+
+T-test membutuhkan variabel hasil numerik dan kelompok yang terdiri dari dua kategori.
+A. Independent samples t-test
+Dipakai ketika dua kelompok terdiri dari observasi yang berbeda atau independen.
+
+Contoh struktur data:
+Gender	Sales
+Male	120
+Male	150
+Female	180
+Female	170
+
+Sintaks:
+male = df.loc[df["Gender"] == "Male", "Sales"].dropna()female = df.loc[df["Gender"] == "Female", "Sales"].dropna()result = stats.ttest_ind(    male,    female,    equal_var=False)print("T-statistic:", result.statistic)print("P-value:", result.pvalue)
+
+
+
+Di sini equal_var=False menjalankan Welch's t-test, yang tidak mengharuskan kedua kelompok memiliki varians yang sama.
+B. Paired samples t-test
+Dipakai ketika dua pengukuran berasal dari subjek yang sama, misalnya nilai sebelum dan sesudah pelatihan.
+before = df["Score_Before"]after = df["Score_After"]paired = pd.concat([before, after], axis=1).dropna()result = stats.ttest_rel(    paired.iloc[:, 0],    paired.iloc[:, 1])print("T-statistic:", result.statistic)print("P-value:", result.pvalue)
+
+
+
+Jangan gunakan paired t-test untuk dua kelompok pelanggan yang berbeda.
+C. Membaca p-value
+alpha = 0.05if result.pvalue < alpha:    print("Ada bukti statistik tentang perbedaan rata-rata.")else:    print("Bukti statistik belum cukup untuk menyatakan ada perbedaan.")
+
+
+
+Hipotesis umumnya:
+- \(H_0\): rata-rata kedua kelompok sama.
+- \(H_1\): rata-rata kedua kelompok berbeda.
+P-value bukan probabilitas bahwa hipotesis nol benar. Hasil yang signifikan juga belum tentu memiliki dampak praktis yang besar.
+
+5. ANOVA — menguji perbedaan rata-rata tiga kelompok atau lebih
+Misalnya lu ingin mengetahui apakah rata-rata penjualan berbeda antara tiga kategori produk: A, B, dan C.
+
+ANOVA satu arah digunakan ketika ada satu variabel kategorikal sebagai faktor kelompok dan satu variabel numerik sebagai hasil.
+group_a = df.loc[df["Category"] == "A", "Sales"].dropna()group_b = df.loc[df["Category"] == "B", "Sales"].dropna()group_c = df.loc[df["Category"] == "C", "Sales"].dropna()result = stats.f_oneway(    group_a,    group_b,    group_c)print("F-statistic:", result.statistic)print("P-value:", result.pvalue)
+
+
+
+Ganti "Category" dan "Sales" sesuai nama kolom dataset lu.
+
+Interpretasi:
+- \(H_0\): seluruh kelompok memiliki rata-rata yang sama.
+- \(H_1\): setidaknya satu rata-rata kelompok berbeda.
+Jika p-value kurang dari 0,05, ada bukti bahwa setidaknya satu kelompok berbeda. Tetapi ANOVA tidak langsung memberitahu kelompok mana yang berbeda.
+
+Untuk mencari pasangan kelompok, lu bisa menggunakan uji post-hoc Tukey:
+from statsmodels.stats.multicomp import pairwise_tukeyhsddata = df[["Category", "Sales"]].dropna()tukey = pairwise_tukeyhsd(    endog=data["Sales"],    groups=data["Category"],    alpha=0.05)print(tukey)
+
+
+
+Jika statsmodels belum terpasang:
+%pip install statsmodels
+
+
+
+ANOVA klasik mengasumsikan observasi independen, residual yang cukup mendekati normal, dan varians antarkelompok yang relatif homogen. Jika varians tidak homogen, pertimbangkan Welch's ANOVA.
+
+6. Chi-square — menguji hubungan dua variabel kategorikal
+Chi-square test of independence digunakan untuk menguji apakah dua variabel kategorikal saling berhubungan.
+
+Contohnya:
+- Gender dengan Product_Category
+- Payment_Method dengan Customer_Type
+- Rating_Category dengan Delivery_Status
+Kedua variabel tidak perlu numerik.
+A. Buat tabel kontingensi
+Misalnya lu ingin menguji hubungan Gender dengan Product_Category.
+table = pd.crosstab(    df["Gender"],    df["Product_Category"])print(table)
+
+
+
+Tabel ini menghitung frekuensi setiap kombinasi kategori.
+B. Jalankan uji chi-square
+chi2, p_value, dof, expected = chi2_contingency(table)print("Chi-square:", chi2)print("P-value:", p_value)print("Degrees of freedom:", dof)print("Expected frequencies:")print(expected)
+
+
+
+Interpretasi:
+- \(H_0\): kedua variabel kategorikal independen.
+- \(H_1\): terdapat hubungan antara kedua variabel.
+Jika p_value < 0.05, ada bukti statistik bahwa kedua variabel tidak independen.
+
+Hal penting: periksa frekuensi harapan (expected). Jika terlalu banyak sel memiliki frekuensi harapan kecil, pendekatan chi-square bisa kurang akurat. Untuk tabel 2×2, Fisher's exact test dapat menjadi alternatif ketika sesuai.
+
+Chi-square juga tidak membuktikan sebab-akibat dan tidak secara langsung mengukur kekuatan hubungan.
+
+7. Ringkasan: kapan menggunakan setiap metode?
+
+Correlation
+
+Dua variabel numerik
+
+Mengukur arah dan kekuatan hubungan.
+
+Contoh: Sales dan Profit.
+
+
+
+
+T-test
+
+Satu variabel numerik, dua kelompok
+
+Menguji perbedaan rata-rata dua kelompok independen atau berpasangan.
+
+Contoh: rata-rata Sales Male vs Female.
+
+
+
+
+ANOVA
+
+Satu variabel numerik, tiga kelompok atau lebih
+
+Menguji apakah rata-rata semua kelompok sama.
+
+Contoh: rata-rata Sales antar kategori produk.
+
+
+
+
+Chi-square
+
+Dua variabel kategorikal
+
+Menguji apakah kedua variabel memiliki hubungan.
+
+Contoh: Gender dan Product_Category.
+
+
+
+8. Latihan langsung dengan dataset lu
+Sebelum mulai, lu perlu tahu bahwa nama kolom dataset Zomato mungkin berbeda dari contoh di atas.
+
+Jalankan:
+df.columns.tolist()
+
+
+
+Kemudian pilih satu metode untuk latihan pertama.
+Pilih metode yang mau lu praktikkan
+
+Correlation — hubungan dua variabel numerik
+
+T-test — perbedaan rata-rata dua kelompok
+
+ANOVA — perbedaan rata-rata beberapa kelompok
+
+Chi-square — hubungan dua variabel kategorikal
+
+
+Contoh pertanyaan analisis
+
+Apakah terdapat hubungan antara Sales dan Profit?
+Mulai latihan metode ini
+Saran gua: pelajari correlation terlebih dahulu, lalu t-test, ANOVA, dan chi-square. Dengan urutan ini, lu akan lebih mudah memahami hubungan antara jenis data, pertanyaan analisis, pemilihan uji statistik, dan interpretasi hasilnya.
