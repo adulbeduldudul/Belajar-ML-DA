@@ -1,0 +1,278 @@
+================================================================================
+ROADMAP LENGKAP: MACHINE LEARNING ENGINEER (MLE) SPECIALIZATION
+Level: Dari Data Analyst Menuju Machine Learning Engineer Berstandar Industri
+Waktu Total: 12 - 18 Bulan (Intensive Mode)
+Target Utama: Production-Grade ML, Deep Learning, MLOps, dan AI Engineering
+================================================================================
+
+PRINSIP DASAR SEORANG ML ENGINEER
+--------------------------------------------------------------------------------
+Banyak orang salah kaprah mengira ML Engineer = Data Scientist.
+- Data Scientist: Fokus pada analisis data, matematika, eksperimen, dan prototyping di Jupyter Notebook.
+- Machine Learning Engineer: Mengambil model hasil riset, lalu membuat arsitektur software, pipeline data otomatis, API berlatensi rendah, deployment containerized, dan sistem monitoring performa model di production.
+
+Rumus MLE: 
+  MLE = Machine Learning Fundamentals + Software Engineering + DevOps/MLOps + Cloud Infrastructure
+
+================================================================================
+FASE 1: MACHINE LEARNING & MATHEMATICAL FOUNDATIONS (Bulan 1 - 3)
+================================================================================
+Fokus: Mengerti mekanisme internal algoritma, bukan sekadar memanggil library.
+
+1. MATEMATIKA DASAR UNTUK MACHINE LEARNING
+   - Aljabar Linear:
+     * Vektor, Matriks, Tensor, Operasi Dot Product, Matrix Multiplication
+     * Eigenvalues & Eigenvectors (Fondasi PCA)
+     * Matrix Decomposition (SVD)
+   - Kalkulus Multivariat & Optimasi:
+     * Turunan Parsial, Gradien, Aturan Rantai (Chain Rule)
+     * Gradient Descent: Batch, Stochastic (SGD), Mini-Batch
+     * Momentum, AdaGrad, RMSProp, Adam Optimizer
+     * Convex vs Non-Convex Optimization
+   - Teori Probabilitas & Statistika Inferensial:
+     * Maximum Likelihood Estimation (MLE) vs Maximum A Posteriori (MAP)
+     * Distribusi Probabilitas (Normal/Gaussian, Bernoulli, Binomial, Poisson)
+     * Bayes' Theorem dan Naive Bayes
+     * Uji Hipotesis, Confidence Intervals, p-value
+
+2. SUPERVISED LEARNING (ALGORITMA KLASIK KE MODERN)
+   - Linear Models:
+     * Linear Regression (OLS, Residual Analysis, Asumsi Gauss-Markov)
+     * Regularization: L1 (Lasso - Feature Selection), L2 (Ridge), ElasticNet
+     * Logistic Regression (Logit function, Odds Ratio, Multi-class One-vs-Rest)
+   - Tree-Based & Ensemble Learning:
+     * Decision Trees (Gini Impurity, Entropy, Pruning)
+     * Bagging: Random Forest (Out-of-Bag Error, Feature Importance)
+     * Boosting: AdaBoost, Gradient Boosting Machine (GBM)
+     * State-of-the-Art Boosters: XGBoost, LightGBM, CatBoost
+   - Support Vector Machines (SVM):
+     * Maximal Margin Classifier, Soft Margin, Kernel Trick (RBF, Polynomial)
+   - k-Nearest Neighbors (k-NN) & Naive Bayes
+
+3. UNSUPERVISED LEARNING & DIMENSIONALITY REDUCTION
+   - Clustering:
+     * K-Means, K-Means++, Elbow Method, Silhouette Score
+     * Hierarchical Clustering (Dendrogram)
+     * Density-Based: DBSCAN (Handling Noise & Outliers)
+   - Reduksi Dimensi:
+     * PCA (Principal Component Analysis)
+     * t-SNE & UMAP (Visualisasi manifold multidimensi)
+
+4. VALIDASI MODEL & EVALUASI BISNIS
+   - Metrik Regresi: MAE, MSE, RMSE, R-Squared, Adjusted R-Squared, MAPE
+   - Metrik Klasifikasi: 
+     * Confusion Matrix, Precision, Recall, F1-Score (Macro, Micro, Weighted)
+     * ROC Curve & AUC, Precision-Recall Curve (Wajib untuk data imbalanced)
+     * Log-Loss
+   - Cross-Validation Strategies:
+     * K-Fold, Stratified K-Fold (Wajib untuk klasifikasi imbalanced)
+     * Time Series Split (Mencegah data leakage temporal)
+
+================================================================================
+FASE 2: ADVANCED FEATURE ENGINEERING & PRODUCTION DATA PIPELINES (Bulan 4 - 5)
+================================================================================
+Fokus: Menjamin data masuk ke model dalam format optimal tanpa data leakage.
+
+1. ADVANCED FEATURE ENGINEERING
+   - Imputasi Lanjutan: KNN Imputer, Iterative Imputer (MICE)
+   - Encoding Kategorikal Tingkat Lanjut:
+     * One-Hot vs Target Encoding (dengan smoothing/out-of-fold)
+     * Frequency/Count Encoding, Binary Encoding, Weight of Evidence (WoE)
+   - Transformasi Fitur Numerik:
+     * Log Transform, Box-Cox, Yeo-Johnson
+     * Binning / Discretization
+     * Feature Interaction & Polynomial Features
+   - Feature Selection:
+     * Filter Methods (Variance Threshold, ANOVA, Chi-Square, Mutual Information)
+     * Wrapper Methods (RFE - Recursive Feature Elimination)
+     * Embedded Methods (Lasso Coef, Tree Feature Importance, SHAP values)
+
+2. HANDLING DATA IMBALANCE DI DUNIA NYATA
+   - Data-level: SMOTE, ADASYN, Random Undersampling, Tomek Links
+   - Algorithm-level: Cost-sensitive learning (class_weight='balanced')
+   - Threshold Tuning: Menggeser decision threshold default (0.5) berdasarkan trade-off biaya bisnis (False Positive vs False Negative).
+
+3. PRODUCTION PIPELINES DENGAN SCIKIT-LEARN
+   - Pembuatan custom transformer via BaseEstimator & TransformerMixin
+   - ColumnTransformer untuk pemrosesan paralel tipe data berbeda
+   - Pipeline terintegrasi: Imputer -> Scaler/Encoder -> Feature Selection -> Model
+   - Serialisasi model:
+     * joblib vs pickle (keamanan dan efisiensi)
+     * ONNX (Open Neural Network Exchange) untuk interoperabilitas lintas bahasa
+
+================================================================================
+FASE 3: SOFTWARE ENGINEERING & BACKEND SERVING UNTUK MLE (Bulan 6 - 7)
+================================================================================
+Fokus: Menulis kode standar engineer, bukan script notebook sekali pakai.
+
+1. SOFTWARE ENGINEERING BEST PRACTICES
+   - Clean Code & Arsitektur Proyek:
+     * Modular design (pemisahan data ingestion, feature store, training, inferensi)
+     * Konfigurasi tersentralisasi (Pydantic Settings, Hydra, YAML/TOML)
+     * Type Hinting modern di Python (typing, Union, Optional, Annotated)
+   - Code Quality & Linting:
+     * Ruff (Linter & Formatter kilat pengganti flake8, black, isort)
+     * Pre-commit hooks untuk standarisasi format otomatis
+   - Testing untuk Machine Learning:
+     * Pytest: Unit testing untuk setiap fungsi transformasi data
+     * Data integrity testing: Pandera / Great Expectations
+     * Integration test untuk pipeline inferensi
+     * Regression testing: Memastikan performa model baru tidak merusak edge cases
+
+2. HIGH-PERFORMANCE BACKEND API (FASTAPI)
+   - Arsitektur REST API dengan FastAPI:
+     * Pydantic schemas untuk request payload & response validation
+     * Asynchronous programming (async / await)
+     * Lifespan handlers: Memuat model ke memory saat startup, bukan per request
+   - Endpoint Desain:
+     * /health (Health check untuk load balancer)
+     * /predict (Inferensi single record)
+     * /predict-batch (Inferensi kumpulan data besar dengan efisiensi vektor)
+   - Exception handling & HTTP Status Codes (422 untuk schema salah, 500 internal error)
+   - Structured Logging (Loguru / Python structlog) berformat JSON untuk ingest ke Grafana/ELK
+
+================================================================================
+FASE 4: CONTAINERIZATION, CLOUD & ORCHESTRATION (Bulan 8 - 9)
+================================================================================
+Fokus: Model dapat dijalankan di mana saja dan scalable.
+
+1. CONTAINERIZATION DENGAN DOCKER
+   - Anatomi Dockerfile untuk Python ML:
+     * Multi-stage build untuk memperkecil ukuran image
+     * Non-root user execution untuk keamanan
+     * Caching pip dependencies via layers
+   - Docker Compose:
+     * Menghubungkan API Inferensi + PostgreSQL (database) + Redis (caching)
+   - Optimasi container runtime: CPU threading (OpenMP, MKL)
+
+2. CLOUD INFRASTRUCTURE (AWS / GCP)
+   - Compute: AWS EC2 / GCP Compute Engine (Instance types: CPU vs GPU instances)
+   - Storage: AWS S3 / GCP Cloud Storage (Data lakes & Model artifacts)
+   - Database: AWS RDS / GCP Cloud SQL
+   - Serverless Deployment: AWS Lambda (containerized) / Google Cloud Run
+
+3. WORKFLOW ORCHESTRATION (DATA PIPELINES)
+   - Prinsip DAG (Directed Acyclic Graph)
+   - Tools Orkestrasi Modern: Prefect / Apache Airflow / Dagster
+   - Task scheduling: Otomasi penarikan data baru, pembersihan, dan training mingguan
+
+================================================================================
+FASE 5: DEEP LEARNING & SPECIALIZATION (Bulan 10 - 12)
+================================================================================
+Fokus: Menangani unstructured data (teks, gambar, audio) menggunakan PyTorch.
+
+1. PYTORCH CORE FUNDAMENTALS
+   - Tensor manipulation, Device placement (CPU, CUDA, MPS)
+   - Autograd Engine: Computational Graphs, Backpropagation manual
+   - Modular Neural Networks: torch.nn.Module, Layers, Custom Loss Functions
+   - Data Loading: torch.utils.data.Dataset & DataLoader (Workers, Pin Memory, Batching)
+   - Training Loop Industri:
+     * Training step, Validation step, Metric tracking
+     * Checkpointing (Simpan bobot model terbaik via .pt / .pth)
+     * Early Stopping, Learning Rate Schedulers (Cosine Annealing, OneCycleLR)
+
+2. MODERN ARCHITECTURES
+   - Deep Tabular: TabNet, ResNet for Tabular Data
+   - Computer Vision (CV):
+     * Convolutional Neural Networks (CNN)
+     * Transfer Learning (ResNet, EfficientNet, ConvNeXt)
+     * Object Detection (YOLO architecture overview)
+   - Natural Language Processing (NLP) & GenAI:
+     * Embeddings: Word2Vec -> Sentence Transformers
+     * Attention Mechanism & Arsitektur Transformer (Encoder-Decoder)
+     * Pre-trained Models: BERT, RoBERTa (Classification, NER)
+     * Hugging Face Transformers, Datasets, dan Evaluate libraries
+
+3. INFERENCE OPTIMIZATION
+   - Model Quantization (FP32 -> INT8 / FP16)
+   - ONNX Runtime Execution
+   - TensorRT (NVIDIA GPU acceleration)
+   - Pruning & Knowledge Distillation
+
+================================================================================
+FASE 6: MLOPS & PRODUCTION LIFECYCLE (Bulan 13 - 15)
+================================================================================
+Fokus: Menjaga model tetap sehat, traceable, dan terotomasi di production.
+
+1. EXPERIMENT TRACKING & MODEL REGISTRY
+   - Masalah "Model sprawl" di tim engineering
+   - MLflow:
+     * Tracking: Log hyperparameters, training metrics, artifacts
+     * Model Registry: Lifecycle management (Staging -> Production -> Archived)
+     * Model serving via MLflow models
+   - Weights & Biases (W&B): Alternatif cloud tracking & collaborative dashboard
+
+2. DATA VERSION CONTROL (DVC)
+   - Mengatasi limitasi Git pada file gigabytes
+   - Integrasi DVC dengan remote storage (AWS S3 / GCP Storage)
+   - DVC Data Pipelines (dvc.yaml, dvc repro) untuk pipeline data reproducible
+
+3. CONTINUOUS INTEGRATION & CONTINUOUS DEPLOYMENT (CI/CD)
+   - GitHub Actions untuk ML:
+     * Automated code quality checks (Ruff, Pytest) pada setiap Pull Request
+     * Automated model validation checks: Menguji apakah model baru performanya melampaui production baseline
+     * Automated container build & push ke Docker Hub / Amazon ECR
+   - CML (Continuous Machine Learning): Menghasilkan visualisasi metrik model langsung di komentar PR GitHub
+
+4. PRODUCTION MONITORING & DRIFT MANAGEMENT
+   - Jenis-jenis degradasi model:
+     * Data Drift (Covariate Shift): Perubahan distribusi input fitur P(X)
+     * Concept Drift: Perubahan hubungan fitur dengan target P(Y|X)
+   - Tools Monitoring: Evidently AI / WhyLogs
+   - Drift Metrics: Kolmogorov-Smirnov Test, Population Stability Index (PSI), Wasserstein Distance
+   - Real-time Observability:
+     * Prometheus untuk metrik sistem (Inference latency, throughput, error rates)
+     * Grafana Dashboard untuk visualisasi real-time
+   - Retraining Triggers: Schedule-based vs Performance/Drift-based
+
+================================================================================
+FASE 7: MODERN AI ENGINEERING & LLMOPS (Bulan 16 - 18)
+================================================================================
+Fokus: Mengintegrasikan LLM ke dalam arsitektur software production.
+
+1. LLM INFERENCE & DEPLOYMENT
+   - Dedicated Serving Engines: vLLM, Ollama, TGI (Text Generation Inference)
+   - Kuantisasi LLM: GGUF, AWQ, GPTQ (4-bit / 8-bit inference)
+   - PagedAttention dan KV-cache management
+
+2. RETRIEVAL-AUGMENTED GENERATION (RAG) ENTERPRISE
+   - Chunking Strategies (Fixed-size, Recursive, Semantic chunking)
+   - Dense & Sparse Embeddings (Hybrid Search)
+   - Vector Databases: Qdrant, ChromaDB, Milvus, pgvector
+   - Re-ranking models (Cohere / BGE Reranker)
+   - RAG Evaluation: Faithfulness, Answer Relevance via Ragas / TruLens
+
+3. LLM APPLICATION ARCHITECTURE & AGENTS
+   - Structured Outputs: Pydantic + Function Calling / Tool Calling
+   - Orchestration: LangChain / LlamaIndex / Raw API with instructor
+   - Multi-Agent Patterns: ReAct framework, routing agents, memory management
+
+================================================================================
+PORTOFOLIO CHECKLIST: 3 MASTERPIECE PROJECT UNTUK TEMBUS KERJA MLE
+================================================================================
+
+PROJECT 1: END-TO-END TABULAR PREDICTIVE SYSTEM
+- Kasus: Real-Time Credit Default / Fraud Detection System
+- Stack: PostgreSQL -> Scikit-Learn / LightGBM -> FastAPI -> Docker -> MLflow
+- Fitur:
+  * Pipeline data utuh dengan penanganan imbalanced data
+  * Serving REST API asynchronous (<50ms latency)
+  * Unit testing lengkap dengan Pytest
+  * Containerized dengan Docker Compose
+
+PROJECT 2: COMPUTER VISION ATAU NLP INFERENCE PIPELINE
+- Kasus: Resume Parsing & Skill Extractor ATAU Medical Image Anomaly Screening
+- Stack: PyTorch / Hugging Face -> ONNX Runtime -> FastAPI -> Celery/Redis -> AWS S3
+- Fitur:
+  * Model deep learning dioptimasi dengan ONNX Runtime
+  * Asynchronous background job processing untuk request berat
+  * Laporan performa latency p50, p95, p99
+
+PROJECT 3: FULL-BLOWN MLOPS PRODUCTION SYSTEM (CAPSTONE)
+- Kasus: Automated E-Commerce Customer Churn & Lifetime Value Predictor
+- Stack: GitHub Actions -> DVC -> AWS S3 -> MLflow -> Evidently AI -> Prometheus + Grafana
+- Fitur:
+  * Versioning data & model dengan DVC dan MLflow
+  * CI/CD pipeline yang menguji kode dan memvalidasi performa model baru otomatis
+  * Monitoring sistem real-time terhadap Data Drift & Model Degradation
+  * Otomatisasi notifikasi alert ketika terjadi drift
